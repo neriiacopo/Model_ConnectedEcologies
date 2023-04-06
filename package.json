@@ -1,0 +1,44 @@
+{
+    "name": "connected_ecologies",
+    "version": "1.0.0",
+    "description": "Connected Ecologies for the Model Festival",
+    "main": "index.jsx",
+    "homepage": ".",
+    "scripts": {
+        "dev": "react-scripts start",
+        "build": "react-scripts build",
+        "deploy": "gh-pages -d build"
+    },
+    "author": "Iacopo Neri - IAAC",
+    "license": "ISC",
+    "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@mui/material": "^5.11.11",
+        "@mui/x-date-pickers": "^6.0.0",
+        "javascript-color-gradient": "^2.4.4",
+        "leaflet": "^1.9.3",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-leaflet": "^4.2.1",
+        "semantic-ui-css": "2.5.0",
+        "semantic-ui-react": "2.1.4",
+        "zustand": "4.3",
+        "react-scripts": "^5.0.1"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "gh-pages": "^4.0.0"
+    }
+}
