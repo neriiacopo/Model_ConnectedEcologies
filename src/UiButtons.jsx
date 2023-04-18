@@ -12,8 +12,8 @@ export default function UiButtons() {
     const contStyle = {
         zIndex: 1001,
         position: "fixed",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         top: 0,
         left: 0,
         pointerEvents: "none",
@@ -47,6 +47,8 @@ export default function UiButtons() {
 
     const primary = {
         backgroundColor: "black",
+        color: "white",
+        border: "solid 1px white",
     };
 
     return (
@@ -65,8 +67,8 @@ export default function UiButtons() {
                     <Button
                         circular
                         icon="arrow left"
-                        inverted
-                        basic
+                        // inverted
+                        // basic
                         style={Object.assign({}, btmLeft, primary)}
                         onClick={() => changePage(-1)}
                     />
@@ -77,8 +79,8 @@ export default function UiButtons() {
                     <Button
                         circular
                         icon="arrow right"
-                        inverted
-                        basic
+                        // inverted
+                        // basic
                         style={Object.assign({}, botmRight, primary)}
                         onClick={() => changePage(1)}
                     />

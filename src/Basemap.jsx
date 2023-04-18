@@ -45,7 +45,7 @@ export default function Basemap() {
         [41.4047523249, 2.1864083579],
     ];
 
-    const cStyle = { color: "white", fillOpacity: 1, weight: 1 };
+    const cStyle = { color: "white", fillOpacity: 1, weight: 0 };
     const bStyle = { color: "black", fillOpacity: 0, weight: 1 };
 
     function triggerPopup(id) {
@@ -61,7 +61,7 @@ export default function Basemap() {
             scrollWheelZoom={false}
             doubleClickZoom={false}
             zoomControl={false}
-            style={{ height: "100vh", width: "100vw" }}
+            style={{ height: "100vh", width: "100vw", pointerEvents: "none" }}
         >
             <ImageOverlay
                 url={url}
@@ -78,6 +78,7 @@ export default function Basemap() {
                             fillColor: palettes[narratives[index + 1]][0],
                             ...cStyle,
                         }}
+                        style={{ pointerEvents: "auto" }}
                         className="shadowed"
                     ></Circle>
                     <Circle
@@ -88,6 +89,7 @@ export default function Basemap() {
                         pathOptions={{
                             ...bStyle,
                         }}
+                        style={{ pointerEvents: "auto" }}
                         className="shadowed"
                     ></Circle>
                 </>

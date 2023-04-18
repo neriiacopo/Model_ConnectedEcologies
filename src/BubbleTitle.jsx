@@ -6,11 +6,12 @@ export default function BubbleTitle() {
     const modalContent = useStore((state) => state.modalContent);
     const intro = useStore((state) => state.intro);
     const texts = useStore((state) => state.texts);
+    const fonts = useStore.getState().fonts;
     const margin = 50;
 
     const contTitle = {
         position: "fixed",
-        width: "100vw",
+        width: "100%",
         top: 0,
         left: 0,
         marginTop: margin * 2.5,
@@ -19,7 +20,7 @@ export default function BubbleTitle() {
 
     const contSubTitle = {
         position: "fixed",
-        width: "100vw",
+        width: "100%",
         bottom: 0,
         left: 0,
         marginBottom: margin * 2,
@@ -36,10 +37,21 @@ export default function BubbleTitle() {
                         inverted
                         textAlign="center"
                     >
-                        <Header.Subheader style={{ fontStyle: "italic" }}>
+                        <Header.Subheader
+                            style={{
+                                fontStyle: "italic",
+                                // fontFamily: fonts[0],
+                                fontWeight: 400,
+                            }}
+                        >
                             {(modalContent + 1).toString().padStart(2, "0")}/03
                         </Header.Subheader>
-                        <Header.Content>
+                        <Header.Content
+                            style={{
+                                fontFamily: fonts[0],
+                                fontWeight: 400,
+                            }}
+                        >
                             {texts[modalContent].title.toUpperCase()}
                         </Header.Content>
                         <i className={texts[modalContent].icon} />
@@ -49,22 +61,31 @@ export default function BubbleTitle() {
             <div style={contSubTitle}>
                 {intro && texts && (
                     <Header
-                        as="h3"
+                        as="h4"
                         icon
                         inverted
                         textAlign="center"
                     >
-                        <Header.Content>
-                            {texts[modalContent].subtitle.toUpperCase()}
+                        <Header.Content sub>
+                            <span
+                                style={{
+                                    // fontFamily: fonts[0],
+                                    fontWeight: 200,
+                                }}
+                            >
+                                {texts[modalContent].subtitle.toUpperCase()}
+                            </span>
                         </Header.Content>
                         {texts[modalContent].action && (
                             <Header.Subheader
                                 style={{
-                                    fontStyle: "italic",
+                                    // fontStyle: "italic",
                                     marginTop: margin / 2,
+                                    // fontFamily: fonts[0],
+                                    fontWeight: 200,
                                 }}
                             >
-                                {texts[modalContent].action}
+                                <u>{texts[modalContent].action}</u>
                             </Header.Subheader>
                         )}
                     </Header>

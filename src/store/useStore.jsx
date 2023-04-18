@@ -19,12 +19,14 @@ ids.map((id, index) => {
 export let useStore = create((set, get) => ({
     entrances: fetchGEOJSON("/entrances.geojson"),
     narratives: ["", "water", "earth", "air", "fire"],
-    activeId: "",
+    activeId: activeId,
     qr: qr,
     playing: false,
     modalContent: 0,
     status: "idle",
     intro: true,
+
+    fonts: ["'Sora', sans-serif", "'Manrope', sans-serif"],
 
     prompts: [
         "",
@@ -56,6 +58,28 @@ export let useStore = create((set, get) => ({
                 "Point the camera to the front and press capture to discover more",
             icon: "see_title",
             button: "capture_btn",
+            facts: {
+                water: [
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                ],
+                earth: [
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                ],
+                air: [
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                ],
+                fire: [
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                    { eng: "TEXT HERE", cat: "TEXT HERE" },
+                ],
+            },
         },
         2: {
             title: "Explore",
