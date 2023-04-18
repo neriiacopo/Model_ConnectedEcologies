@@ -1,0 +1,69 @@
+.listen_title:before {
+    content: "";
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    background-image: url("/public/Icons/listen.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.see_title:before {
+    content: "";
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    background-image: url("/public/Icons/see_learn.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.learn_title:before {
+    content: "";
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    background-image: url("/public/Icons/explore.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.play_btn:before {
+    content: "";
+    display: inline-block;
+    width: 5em;
+    height: 5em;
+    background-image: url("/public/Icons/play.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.pause_btn:before {
+    content: "";
+    display: inline-block;
+    width: 5em;
+    height: 5em;
+    background-image: url("/public/Icons/pause.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.capture_btn:before {
+    content: "";
+    display: inline-block;
+    width: 5em;
+    height: 5em;
+    background-image: url("/public/Icons/capture.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.redirect_btn:before {
+    content: "";
+    display: inline-block;
+    width: 5em;
+    height: 5em;
+    background-image: url("/public/Icons/redirect.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}

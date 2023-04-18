@@ -1,14 +1,17 @@
+html,
 body,
-html {
-    margin: 0;
-    padding: 0;
+#root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     overflow: hidden;
+    font-family: "Sora", sans-serif !important;
 }
 
-#root {
-    position: absolute;
-    z-index: 0;
+h1 h2 h3 h4 h5 h6 {
+    font-family: "Sora", sans-serif !important;
 }
 
 .full {
@@ -17,6 +20,7 @@ html {
     object-fit: cover;
     border-radius: 30px;
     z-index: 1000;
+    box-shadow: 5px 5px 30px #888888;
 }
 
 #container {
@@ -26,27 +30,91 @@ html {
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 60px;
+    padding: 60px 100px 60px 100px;
     z-index: 1000;
+    pointer-events: none;
 }
 
 #water {
-    background-image: linear-gradient(180deg, #5c0067 0%, #00d4ff 100%);
-    display: none;
-    box-shadow: 5px 5px 30px #888888;
+    display: block;
 }
 
 #air {
-    background-image: linear-gradient(180deg, #67001f 0%, #ff00ff 100%);
-    display: none;
+    display: block;
 }
 
 #earth {
-    background-image: linear-gradient(180deg, #00673c 0%, #00ff88 100%);
-    display: none;
+    display: block;
 }
 
 #fire {
-    background-image: linear-gradient(180deg, #670000 0%, #ff8800 100%);
-    display: none;
+    display: block;
+}
+
+#bubble {
+    transition: height 1s, width 1.5s, border-radius 0.5s ease-in-out;
+    overflow: hidden;
+    border: solid white !important;
+}
+
+.modal {
+    position: "fixed";
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 15px !important;
+    background-color: transparent !important;
+    overflow: hidden;
+}
+
+.margined {
+    margin: 20px !important;
+}
+
+.dimmer {
+    /* background-color: transparent !important; */
+    z-index: 0 !important;
+}
+
+#output {
+    mix-blend-mode: overlay;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    z-index: 0 !important;
+    position: relative;
+    background-color: #eeeeee;
+}
+
+.blurred_bg {
+    backdrop-filter: blur(5px);
+}
+
+.dim {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.blurred_btn {
+    backdrop-filter: blur(10px);
+}
+
+.border_white {
+    border: solid 2px white !important;
+}
+
+.shadowed {
+    box-shadow: 5px 5px 2px #888888 !important;
+}
+
+.full_page {
+    position: "fixed";
+    width: "100vw";
+    height: "100vh";
+    top: 0;
+    left: 0;
+    color: "white";
 }
