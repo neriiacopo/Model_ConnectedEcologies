@@ -1,12 +1,6 @@
 import React from "react";
 import "leaflet/dist/leaflet.css";
-import {
-    Circle,
-    Marker,
-    TileLayer,
-    MapContainer,
-    ImageOverlay,
-} from "react-leaflet";
+import { Circle, MapContainer, ImageOverlay } from "react-leaflet";
 import { useStore } from "./store/useStore.jsx";
 import { useEffect, useState } from "react";
 
@@ -18,7 +12,7 @@ export default function Basemap() {
         [41.4024576644005009, 2.1816104321545526],
         [41.4058469378445082, 2.1901070323652134],
     ];
-    const url = "./Basemap_geor.png"; // or 'path/to/image.tif'
+    const url = "./Basemap_geo.png"; // or 'path/to/image.tif'
 
     const [entrances, setEntrances] = useState([]);
 
@@ -38,8 +32,6 @@ export default function Basemap() {
         fetchGEOJSON("./entrances.geojson");
     }, []);
 
-    const position = [41.404096304379244, 2.1857834057224865];
-
     const bounds = [
         [41.4035452292, 2.1852657369],
         [41.4047523249, 2.1864083579],
@@ -54,7 +46,6 @@ export default function Basemap() {
 
     return (
         <MapContainer
-            center={position}
             maxZoom={20}
             bounds={bounds}
             dragging={false}

@@ -5,16 +5,25 @@ import "./style_ico.css";
 export default function BubbleTitle() {
     const modalContent = useStore((state) => state.modalContent);
     const intro = useStore((state) => state.intro);
-    const texts = useStore((state) => state.texts);
+    const language = useStore((state) => state.language);
+    const textsSettings = useStore((state) => state.texts[modalContent]);
     const fonts = useStore.getState().fonts;
     const margin = 50;
+
+    const activeId = useStore.getState().activeId;
+    const narrative = useStore.getState().narratives[activeId];
+    const fact = useStore(
+        (state) => state.texts["1"].facts[narrative][0][language]
+    );
+    const status = useStore((state) => state.status);
 
     const contTitle = {
         position: "fixed",
         width: "100%",
         top: 0,
         left: 0,
-        marginTop: margin * 2.5,
+        // marginTop: margin * 2.5,
+        marginTop: "30%",
         fontFamily: "Sora",
     };
 
@@ -23,14 +32,25 @@ export default function BubbleTitle() {
         width: "100%",
         bottom: 0,
         left: 0,
-        marginBottom: margin * 2,
+        // marginBottom: margin * 2,
+        marginBottom: "30%",
+        padding: margin,
+    };
+
+    const contSubFacts = {
+        position: "fixed",
+        width: "100%",
+        bottom: 0,
+        left: 0,
+        // marginBottom: margin * 2,
+        marginBottom: "20%",
         padding: margin,
     };
 
     return (
         <>
             <div style={contTitle}>
-                {intro && texts && (
+                {intro && textsSettings && (
                     <Header
                         as="h2"
                         icon
@@ -52,42 +72,71 @@ export default function BubbleTitle() {
                                 fontWeight: 400,
                             }}
                         >
-                            {texts[modalContent].title.toUpperCase()}
+                            {textsSettings.title[language].toUpperCase()}
                         </Header.Content>
-                        <i className={texts[modalContent].icon} />
+                        <i className={textsSettings.icon} />
                     </Header>
                 )}
             </div>
             <div style={contSubTitle}>
-                {intro && texts && (
+                {intro && textsSettings && (
                     <Header
                         as="h4"
                         icon
                         inverted
                         textAlign="center"
                     >
-                        <Header.Content sub>
+                        <Header.Content>
                             <span
                                 style={{
                                     // fontFamily: fonts[0],
                                     fontWeight: 200,
                                 }}
                             >
-                                {texts[modalContent].subtitle.toUpperCase()}
+                                {textsSettings.subtitle[language].toUpperCase()}
                             </span>
                         </Header.Content>
-                        {texts[modalContent].action && (
+                        {textsSettings.action[language] && (
                             <Header.Subheader
                                 style={{
                                     // fontStyle: "italic",
                                     marginTop: margin / 2,
                                     // fontFamily: fonts[0],
                                     fontWeight: 200,
+                                    pointerEvents: "auto",
                                 }}
                             >
-                                <u>{texts[modalContent].action}</u>
+                                <u
+                                    onClick={() => {
+                                        textsSettings.actionFun();
+                                    }}
+                                >
+                                    {textsSettings.action[language]}
+                                </u>
                             </Header.Subheader>
                         )}
+                    </Header>
+                )}
+            </div>
+
+            <div style={contSubFacts}>
+                {status == "loading" && (
+                    <Header
+                        as="h4"
+                        icon
+                        inverted
+                        textAlign="center"
+                    >
+                        <Header.Content>
+                            <span
+                                style={{
+                                    // fontFamily: fonts[0],
+                                    fontWeight: 500,
+                                }}
+                            >
+                                {fact}
+                            </span>
+                        </Header.Content>
                     </Header>
                 )}
             </div>

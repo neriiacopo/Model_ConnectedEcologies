@@ -5,11 +5,14 @@ import ReactHowler from "react-howler";
 
 export default function Hear() {
     const [playing, setPlay] = useState(false);
-    const narratives = useStore.getState().narratives;
+
+    const activeId = useStore.getState().activeId;
+    const narrative = useStore.getState().narratives[activeId];
     const icoBtn = useStore((state) => state.texts["0"].button);
     const removeIntro = useStore.getState().removeIntro;
 
-    // useStore.setState({ intro: true });
+    const language = useStore((state) => state.language);
+    const audio = useStore((state) => state.recordings[language][narrative]);
 
     const fontSize = 20;
 
@@ -50,7 +53,7 @@ export default function Hear() {
                 )}
             </div>
             <ReactHowler
-                src="/audiotest.mp3"
+                src={audio}
                 playing={playing}
                 onEnd={() => useStore.setState({ modalContent: 1 })}
             />

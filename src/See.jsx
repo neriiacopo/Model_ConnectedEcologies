@@ -1,4 +1,4 @@
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Header } from "semantic-ui-react";
 import { useRef, useEffect, useState } from "react";
 import { useStore } from "./store/useStore.jsx";
 
@@ -9,41 +9,17 @@ export default function See() {
     const icoBtn = useStore((state) => state.texts["1"].button);
     const intro = useStore((state) => state.intro);
 
+    const language = useStore((state) => state.language);
+    const narrative = useStore.getState().narratives[activeId];
+    const fact = useStore(
+        (state) => state.texts["1"].facts[narrative][0][language]
+    );
+
+    console.log(fact);
     const canvasInRef = useRef(null);
     const canvasOutRef = useRef(null);
 
     const video = document.createElement("video");
-    navigator.mediaDevices
-        .getUserMedia({
-            audio: false,
-            video: { facingMode: "environment" },
-        })
-        .then((stream) => {
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
-    // useEffect(() => {
-    //     const canvasIn = canvasInRef.current;
-    //     const canvasOut = canvasOutRef.current;
-    //     useStore.setState({ status: "loading" });
-
-    //     canvasIn.width = 360;
-    //     canvasIn.height = 480;
-    //     canvasOut.width = 360;
-    //     canvasOut.height = 480;
-
-    //     const url = "https://neriiacopo-t2i-adapter.hf.space";
-    //     canvasIn
-    //         .getContext("2d")
-    //         .drawImage(video, 0, 0, canvasIn.width, canvasIn.height);
-
-    //     const b64img = canvasIn.toDataURL("image/png");
-    //     generate(canvasOut, url, b64img, prompts[activeId]);
-    // }, [trigger]);
 
     function captureImg() {
         const canvasIn = canvasInRef.current;
@@ -55,12 +31,32 @@ export default function See() {
         canvasOut.width = 360;
         canvasOut.height = 480;
 
-        const url = "https://neriiacopo-t2i-adapter.hf.space";
-        canvasIn
-            .getContext("2d")
-            .drawImage(video, 0, 0, canvasIn.width, canvasIn.height);
+        let b64img;
 
-        const b64img = canvasIn.toDataURL("image/png");
+        navigator.mediaDevices
+            .getUserMedia({
+                audio: false,
+                video: { facingMode: "environment" },
+            })
+            .then((stream) => {
+                video.srcObject = stream;
+                video.play();
+
+                canvasIn
+                    .getContext("2d")
+                    .drawImage(video, 0, 0, canvasIn.width, canvasIn.height);
+
+                const tracks = stream.getTracks();
+                tracks.forEach((track) => track.stop());
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        b64img = canvasIn.toDataURL("image/png");
+
+        const url = "https://neriiacopo-t2i-adapter.hf.space";
+
         generate(canvasOut, url, b64img, prompts[activeId]);
         // setTrigger(trigger + 1);
     }
@@ -78,8 +74,19 @@ export default function See() {
         left: "50%",
         transform: "translate(-50%, 0) scale(0.5)",
         fontSize: "20px",
-        border: "solid 2px white",
+        border: "solid 4px white",
         borderRadius: "100%",
+        backdropFilter: "blur(10px)",
+    };
+    const textStyleBottom = {
+        position: "absolute",
+        bottom: "20%",
+        width: "150%",
+        left: "50%",
+        transform: "translate(-50%, 0) scale(0.5)",
+        fontSize: "20px",
+        // border: "solid 4px white",
+        // borderRadius: "100%",
     };
 
     const containerStyle = {
@@ -100,7 +107,7 @@ export default function See() {
                     width: "100%",
                     height: "100%",
                     borderRadius: "20px",
-                    display: "none",
+                    // display: "none",
                 }}
             />
 

@@ -5,7 +5,7 @@ import Hear from "./Hear.jsx";
 import See from "./See.jsx";
 import Learn from "./Learn.jsx";
 import AnimatedGradient from "./AnimatedGradient.jsx";
-import UiButtons from "./UiButtons.jsx";
+import ButtonsNav from "./ButtonsNav.jsx";
 
 export default function Card() {
     const activeId = useStore((state) => state.activeId);
@@ -16,10 +16,13 @@ export default function Card() {
     const status = useStore((state) => state.status);
 
     const radCircle = 100;
+
     let modalCircle = {
         borderRadius: "100%",
-        width: radCircle + "px",
-        height: radCircle + "px",
+        // width: radCircle + "px",
+        // height: radCircle + "px",
+        width: window.innerWidth * 0.3,
+        height: window.innerWidth * 0.3,
         position: "relative",
         top: "50%",
         left: "50%",
@@ -45,14 +48,8 @@ export default function Card() {
                 onClose={() => resetModal()}
                 open={Boolean(activeId)}
                 dimmer={"blurring"}
-                // closeIcon={modalContent == "see" ? true : false}
             >
                 <div
-                    // style={
-                    //     modalContent == 0 || modalContent == 2
-                    //         ? modalCircle
-                    //         : modalRect
-                    // }
                     style={
                         status != "idle" && modalContent == 1
                             ? modalRect
@@ -66,7 +63,7 @@ export default function Card() {
                     {modalContent == 1 ? <See /> : <></>}
                     {modalContent == 2 ? <Learn /> : <></>}
                 </div>
-                <UiButtons />
+                <ButtonsNav />
             </Modal>
         </>
     );

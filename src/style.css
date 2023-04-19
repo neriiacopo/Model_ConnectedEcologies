@@ -109,12 +109,3 @@ body,
 .shadowed {
     box-shadow: 5px 5px 2px #888888 !important;
 }
-
-/* .full_page {
-    position: "fixed";
-    width: 100vw;
-    height: "100vh";
-    top: 0;
-    left: 0;
-    color: "white";
-} */
