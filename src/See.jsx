@@ -1,21 +1,18 @@
 import { Button, Grid, Header } from "semantic-ui-react";
 import { useRef, useEffect, useState } from "react";
 import { useStore } from "./store/useStore.jsx";
+// import cv from "opencv.js";
 
 export default function See() {
     const prompts = useStore.getState().prompts;
     const activeId = useStore.getState().activeId;
-    const [trigger, setTrigger] = useState([0]);
+    const [trigger, setTrigger] = useState([-1]);
     const icoBtn = useStore((state) => state.texts["1"].button);
     const intro = useStore((state) => state.intro);
+    const loadImg = useStore((state) => state.loadImg);
 
-    const language = useStore((state) => state.language);
-    const narrative = useStore.getState().narratives[activeId];
-    const fact = useStore(
-        (state) => state.texts["1"].facts[narrative][0][language]
-    );
+    const screenSize = [window.innerWidth, window.innerHeight];
 
-    console.log(fact);
     const canvasInRef = useRef(null);
     const canvasOutRef = useRef(null);
 
@@ -24,14 +21,12 @@ export default function See() {
     function captureImg() {
         const canvasIn = canvasInRef.current;
         const canvasOut = canvasOutRef.current;
-        useStore.setState({ status: "loading", intro: false });
 
-        canvasIn.width = 360;
-        canvasIn.height = 480;
-        canvasOut.width = 360;
-        canvasOut.height = 480;
-
-        let b64img;
+        canvasIn.width = window.innerWidth > 512 ? 512 : window.innerWidth;
+        canvasIn.height = 512;
+        canvasOut.width = screenSize[0] > 512 ? 512 : screenSize[0];
+        canvasOut.height = screenSize[1];
+        loadImg();
 
         navigator.mediaDevices
             .getUserMedia({
@@ -40,25 +35,32 @@ export default function See() {
             })
             .then((stream) => {
                 video.srcObject = stream;
-                video.play();
+                video.onloadedmetadata = (e) => {
+                    video.play();
+                    canvasIn
+                        .getContext("2d")
+                        .drawImage(
+                            video,
+                            0,
+                            0,
+                            canvasIn.width,
+                            canvasIn.height
+                        );
+                    const b64img = canvasIn.toDataURL("image/png");
 
-                canvasIn
-                    .getContext("2d")
-                    .drawImage(video, 0, 0, canvasIn.width, canvasIn.height);
+                    showCanny(b64img, canvasOut);
 
-                const tracks = stream.getTracks();
-                tracks.forEach((track) => track.stop());
+                    const url = "https://neriiacopo-t2i-adapter.hf.space";
+                    generate(canvasOut, url, b64img, prompts[activeId]);
+
+                    // Turn off the camera
+                    const tracks = stream.getTracks();
+                    tracks.forEach((track) => track.stop());
+                };
             })
             .catch((error) => {
                 console.error(error);
             });
-
-        b64img = canvasIn.toDataURL("image/png");
-
-        const url = "https://neriiacopo-t2i-adapter.hf.space";
-
-        generate(canvasOut, url, b64img, prompts[activeId]);
-        // setTrigger(trigger + 1);
     }
 
     const elStyleCentered = {
@@ -77,16 +79,6 @@ export default function See() {
         border: "solid 4px white",
         borderRadius: "100%",
         backdropFilter: "blur(10px)",
-    };
-    const textStyleBottom = {
-        position: "absolute",
-        bottom: "20%",
-        width: "150%",
-        left: "50%",
-        transform: "translate(-50%, 0) scale(0.5)",
-        fontSize: "20px",
-        // border: "solid 4px white",
-        // borderRadius: "100%",
     };
 
     const containerStyle = {
@@ -180,4 +172,26 @@ async function generate(canvasOut, url, b64img, prompt) {
     } catch (error) {
         console.error("Error:", error);
     }
+}
+
+function showCanny(b64img, canvasOut) {
+    const img = new Image();
+    img.src = b64img;
+    img.onload = function () {
+        var src = cv.imread(img);
+        var gray = new cv.Mat();
+        var dst = new cv.Mat();
+
+        cv.cvtColor(src, gray, cv.COLOR_RGB2GRAY, 0);
+
+        cv.Canny(gray, dst, 50, 200);
+
+        cv.GaussianBlur(dst, dst, new cv.Size(3, 3), 0, 0, cv.BORDER_DEFAULT);
+
+        cv.imshow(canvasOut, dst);
+
+        src.delete();
+        gray.delete();
+        dst.delete();
+    };
 }

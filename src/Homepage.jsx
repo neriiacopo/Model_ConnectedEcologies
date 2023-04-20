@@ -1,6 +1,9 @@
 import { Image, Button, Header } from "semantic-ui-react";
+import { useStore } from "./store/useStore";
+import About from "./About";
 
 export default function Homepage() {
+    const about = useStore((state) => state.about);
     const margin = 20;
 
     const contStyle = {
@@ -12,6 +15,8 @@ export default function Homepage() {
         left: 0,
         pointerEvents: "none",
         textAlign: "middle",
+        backgroundColor: !about ? "transparent" : "white",
+        pointerEvents: !about ? "none" : "auto",
     };
 
     const topRight = {
@@ -57,19 +62,27 @@ export default function Homepage() {
                     style={topRight}
                     src="./Logos/Model Logo.png"
                 />
-                <Header
-                    as="h4"
-                    textAlign="center"
-                    style={botmLeft}
-                >
-                    <Header.Content
-                        style={{
-                            fontWeight: 500,
-                        }}
+                {about && (
+                    <>
+                        <About />
+                    </>
+                )}
+                {!about && (
+                    <Header
+                        as="h4"
+                        textAlign="center"
+                        style={botmLeft}
                     >
-                        ABOUT
-                    </Header.Content>
-                </Header>
+                        <Header.Content
+                            style={{
+                                fontWeight: 500,
+                            }}
+                            onClick={() => useStore.setState({ about: true })}
+                        >
+                            ABOUT
+                        </Header.Content>
+                    </Header>
+                )}
             </div>
         </>
     );

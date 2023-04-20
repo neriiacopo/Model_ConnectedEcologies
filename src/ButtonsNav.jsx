@@ -1,11 +1,12 @@
 import { useStore } from "./store/useStore";
 import { Button, Header } from "semantic-ui-react";
 import BubbleTitle from "./BubbleTitle.jsx";
+import CloseBtn from "./CloseBtn";
 
 export default function ButtonsNav() {
-    const resetModal = useStore.getState().resetModal;
     const changePage = useStore.getState().changePage;
     const modalContent = useStore((state) => state.modalContent);
+    const about = useStore((state) => state.about);
 
     const margin = 50;
 
@@ -45,42 +46,35 @@ export default function ButtonsNav() {
         pointerEvents: "auto",
     };
 
-    const primary = {
-        backgroundColor: "black",
-        color: "white",
-        border: "solid 1px white",
-    };
+    const primary = {};
+    //     backgroundColor: "black",
+    //     color: "white",
+    //     border: "solid 1px white",
+    // };
 
     return (
         <>
             <div style={contStyle}>
                 <BubbleTitle />
-                <Button
-                    circular
-                    inverted
-                    basic
-                    icon="close"
-                    style={topRight}
-                    onClick={() => resetModal()}
-                />
-                {modalContent > 0 ? (
+                <CloseBtn />
+                {!about && modalContent > 0 ? (
                     <Button
                         circular
                         icon="arrow left"
-                        // inverted
-                        // basic
+                        inverted
+                        basic
                         style={Object.assign({}, btmLeft, primary)}
                         onClick={() => changePage(-1)}
                     />
                 ) : (
                     <></>
                 )}
-                {modalContent < 2 ? (
+                {!about && modalContent < 2 ? (
                     <Button
                         circular
                         icon="arrow right"
-                        // inverted
-                        // basic
+                        inverted
+                        basic
                         style={Object.assign({}, botmRight, primary)}
                         onClick={() => changePage(1)}
                     />

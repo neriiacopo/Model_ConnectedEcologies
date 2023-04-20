@@ -12,9 +12,8 @@ export default function BubbleTitle() {
 
     const activeId = useStore.getState().activeId;
     const narrative = useStore.getState().narratives[activeId];
-    const fact = useStore(
-        (state) => state.texts["1"].facts[narrative][0][language]
-    );
+    const factId = useStore((state) => state.factId);
+    const fact = useStore((state) => state.texts["1"].facts[narrative][factId]);
     const status = useStore((state) => state.status);
 
     const contTitle = {
@@ -22,8 +21,8 @@ export default function BubbleTitle() {
         width: "100%",
         top: 0,
         left: 0,
-        // marginTop: margin * 2.5,
-        marginTop: "30%",
+        marginTop: margin * 2,
+        // marginTop: "30%",
         fontFamily: "Sora",
     };
 
@@ -32,8 +31,8 @@ export default function BubbleTitle() {
         width: "100%",
         bottom: 0,
         left: 0,
-        // marginBottom: margin * 2,
-        marginBottom: "30%",
+        marginBottom: margin * 1,
+        // marginBottom: "30%",
         padding: margin,
     };
 
@@ -42,9 +41,10 @@ export default function BubbleTitle() {
         width: "100%",
         bottom: 0,
         left: 0,
-        // marginBottom: margin * 2,
-        marginBottom: "20%",
+        marginBottom: margin * 1.5,
+        // marginBottom: "20%",
         padding: margin,
+        color: "black",
     };
 
     return (
@@ -120,21 +120,34 @@ export default function BubbleTitle() {
             </div>
 
             <div style={contSubFacts}>
-                {status == "loading" && (
+                {status == "frozen" && (
                     <Header
                         as="h4"
                         icon
                         inverted
                         textAlign="center"
                     >
-                        <Header.Content>
+                        <Header.Content
+                            style={{
+                                // backgroundColor: "rgba(0,0,0,0.3)",
+                                // backgroundColor: "rgba(255,255,255,0.3)",
+                                padding: "5px",
+                                borderRadius: "20px",
+                                border: "solid white",
+                            }}
+                            className="blurred_bg"
+                        >
                             <span
                                 style={{
                                     // fontFamily: fonts[0],
-                                    fontWeight: 500,
+                                    fontWeight: 600,
+                                    // color: "black",
+                                    color: "white",
+                                    // backgroundColor: "black",
+                                    // lineHeight: "1.5em",
                                 }}
                             >
-                                {fact}
+                                {fact[language]}
                             </span>
                         </Header.Content>
                     </Header>

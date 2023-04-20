@@ -26,6 +26,7 @@ export let useStore = create((set, get) => ({
     status: "idle",
     intro: true,
     language: "eng",
+    about: false,
 
     recordings: {
         eng: {
@@ -35,10 +36,10 @@ export let useStore = create((set, get) => ({
             fire: "./Recordings/Eng/Fire.mp3",
         },
         cat: {
-            water: "./Recordings/Cat/Agua.mp3",
+            water: "./Recordings/Cat/Aigua.mp3",
             earth: "./Recordings/Cat/Terra.mp3",
             air: "./Recordings/Cat/Aire.mp3",
-            fire: "./Recordings/Cat/Fuego.mp3",
+            fire: "./Recordings/Cat/Foc.mp3",
         },
     },
 
@@ -46,17 +47,17 @@ export let useStore = create((set, get) => ({
 
     prompts: [
         "",
-        "the city is on fire",
         "a flooded cityscape",
+        "the city is on fire",
         "a desert cityscape, trees with no leaves, dry",
         "a dusty cityscape, storm in the sky, Mars",
     ],
 
     palettes: {
-        water: ["#388CDC", "#68F3F5", "#D6E7F2", "#5147B4"],
-        earth: ["#7FB89B", "#DAAE78", "#AF9D72", "#3C544D"],
-        air: ["#EBCDAE", "#E6EBED", "#AFA790", "#7F9AAF"],
-        fire: ["#DE666E", "#ED6722", "#F1B09A", "#FDB84F"],
+        water: ["#339999", "#3366CC", "#0099CC"],
+        earth: ["#668760", "#669999", "#999C72"],
+        air: ["#CC9999", "#9999CC", "#999999"],
+        fire: ["#C55F52", "#CB8752", "#C3606C"],
     },
 
     texts: {
@@ -160,13 +161,12 @@ export let useStore = create((set, get) => ({
                 cat: "Et preguntes com actuar? Exploreu projectes per al nostre futur",
             },
             action: {
-                eng: "Go to a new experience",
-                cat: "Anar a una nova experiència",
+                eng: "Or go to a new experience",
+                cat: "o Anar a una nova experiència",
             },
             actionFun: function () {
                 const activeId = get().activeId;
                 const nextActiveId = activeId + 1;
-                console.log(nextActiveId);
                 get().resetModal();
 
                 set((state) => ({
@@ -184,17 +184,21 @@ export let useStore = create((set, get) => ({
         },
     },
 
+    factId: -1,
+
     changePage: (step) => {
         const modalContent = get().modalContent;
         if (step > 0) {
             set((state) => ({
                 intro: true,
                 modalContent: modalContent + step,
+                factId: -1,
                 status: "idle",
             }));
         } else {
             set((state) => ({
                 modalContent: modalContent + step,
+                factId: -1,
                 status: "idle",
             }));
         }
@@ -214,6 +218,19 @@ export let useStore = create((set, get) => ({
             status: "idle",
             intro: true,
             language: language,
+            factId: -1,
+            about: false,
+        }));
+    },
+
+    loadImg: () => {
+        const factId = get().factId;
+        const nextFactId = factId + 1;
+
+        set((state) => ({
+            factId: nextFactId < 3 ? nextFactId : 1,
+            status: "loading",
+            intro: false,
         }));
     },
 }));

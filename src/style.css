@@ -79,7 +79,7 @@ body,
 }
 
 #output {
-    mix-blend-mode: overlay;
+    mix-blend-mode: screen;
 }
 
 .background {
@@ -104,8 +104,4 @@ body,
 
 .border_white {
     border: solid 2px white !important;
-}
-
-.shadowed {
-    box-shadow: 5px 5px 2px #888888 !important;
 }

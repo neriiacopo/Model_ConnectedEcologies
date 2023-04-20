@@ -20,6 +20,7 @@ export default function AnimatedGradient({
         const colorCount = colors.length;
 
         let time = 0;
+
         function animate() {
             if (status == "idle") {
                 time += 0.003;

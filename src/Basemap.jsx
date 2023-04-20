@@ -12,7 +12,7 @@ export default function Basemap() {
         [41.4024576644005009, 2.1816104321545526],
         [41.4058469378445082, 2.1901070323652134],
     ];
-    const url = "./Basemap_geo.png"; // or 'path/to/image.tif'
+    const url = "./Basemap.png"; // or 'path/to/image.tif'
 
     const [entrances, setEntrances] = useState([]);
 
@@ -37,8 +37,8 @@ export default function Basemap() {
         [41.4047523249, 2.1864083579],
     ];
 
-    const cStyle = { color: "white", fillOpacity: 1, weight: 0 };
-    const bStyle = { color: "black", fillOpacity: 0, weight: 1 };
+    const cStyle = { color: "transparent", fillOpacity: 1, weight: 0 };
+    const bStyle = { color: "transparent", fillOpacity: 1, weight: 0 };
 
     function triggerPopup(id) {
         useStore.setState({ activeId: id });
@@ -60,30 +60,16 @@ export default function Basemap() {
             />
 
             {entrances.map((feature, index) => (
-                <>
-                    <Circle
-                        key={index}
-                        center={feature.geometry.coordinates}
-                        radius={5}
-                        pathOptions={{
-                            fillColor: palettes[narratives[index + 1]][0],
-                            ...cStyle,
-                        }}
-                        style={{ pointerEvents: "auto" }}
-                        className="shadowed"
-                    ></Circle>
-                    <Circle
-                        key={index + 100000}
-                        center={feature.geometry.coordinates}
-                        eventHandlers={{ click: () => triggerPopup(index + 1) }}
-                        radius={8}
-                        pathOptions={{
-                            ...bStyle,
-                        }}
-                        style={{ pointerEvents: "auto" }}
-                        className="shadowed"
-                    ></Circle>
-                </>
+                <Circle
+                    key={index}
+                    center={feature.geometry.coordinates}
+                    eventHandlers={{ click: () => triggerPopup(index + 1) }}
+                    radius={20}
+                    pathOptions={{
+                        ...bStyle,
+                    }}
+                    style={{ pointerEvents: "auto" }}
+                ></Circle>
             ))}
         </MapContainer>
     );
